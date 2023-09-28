@@ -1,0 +1,26 @@
+.news-ticker-container {
+    overflow: hidden;
+    background-color: #333;
+    color: white;
+}
+
+.news-ticker {
+    display: flex;
+    animation: scrollAnimation 15s linear infinite;
+}
+
+.news-item {
+    padding: 10px 20px;
+    white-space: nowrap;
+    border-right: 1px solid #666;
+}
+
+@keyframes scrollAnimation {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
