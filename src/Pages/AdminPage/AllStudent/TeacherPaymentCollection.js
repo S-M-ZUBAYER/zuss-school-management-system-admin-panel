@@ -28,6 +28,75 @@ function TeacherPaymentCollection({ student }) {
         }
     };
 
+    const currentDate = new Date();
+
+    // Format the date as needed (e.g., "Month Day, Year")
+    const formattedDate = currentDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+
+    function printPaymentReceipt(paymentInfo) {
+        // Create a new window for printing
+        const printWindow = window.open('', '', 'width=600,height=600');
+
+        // Create a new array to store the status elements that match the selectedPayments
+        const selectedStatus = paymentInfo.status.filter((status) =>
+            paymentInfo.selectedPayments.includes(status.purpose)
+        );
+
+        // Write the content to be printed into the new window
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>Payment Receipt</title>
+            </head>
+            <body>
+            <h2>Payment Receipt</h2>
+            <p><strong>Name:</strong> ${paymentInfo.Name}</p>
+            <p><strong>Student ID:</strong> ${paymentInfo.studentId}</p>
+                <p><strong>Class Name:</strong> ${paymentInfo.ClassName}</p>
+                <p><strong>Section Name:</strong> ${paymentInfo.SectionName}</p>
+                <p><strong>Shift Name:</strong> ${paymentInfo.ShiftName}</p>
+                <p><strong>Class Roll:</strong> ${paymentInfo.ClassRoll}</p>
+                <p><strong>Payment Method:</strong> ${paymentInfo.paymentMethod}</p>
+                <p><strong>Agent Number:</strong> ${paymentInfo.agentNumber}</p>
+                <p><strong>Transaction ID:</strong> ${paymentInfo.transactionId}</p>
+                <p><strong>Paid Amount:</strong> ${paymentInfo.PaidAmount}</p>
+                <p><strong>Selected Payments:</strong> ${paymentInfo.selectedPayments.join(', ')}</p>
+                <h3>Payment Status:</h3>
+                <ul>
+                    ${selectedStatus.map((status) => `
+                        <li>
+                            <strong>${status.purpose}:</strong>
+                            Amount: ${status.amount}, Paid: ${status.paid ? 'Yes' : 'No'}
+                        </li>
+                    `).join('')}
+                </ul>
+                <p><strong>Unpaid Amount:</strong> ${paymentInfo.unpaidAmount}</p>
+
+                <p style="margin-top: 20px;"><strong>Receiver's Signature</p>
+                <p ><strong>Date:</strong> ${formattedDate}</p>
+
+                
+            </body>
+            </html>
+        `);
+
+        // Close the document to ensure it's ready for printing
+        printWindow.document.close();
+
+        // Print the content
+        printWindow.print();
+
+        // Close the print window
+        printWindow.close();
+    }
+
+
+
+
     const calculatePaymentStatus = async (selectedPayments, status, paidAmount, unpaidAmount) => {
         console.log("click the update status")
         const confirmed = window.confirm('Are you sure you want to make this payment?');
@@ -72,12 +141,16 @@ function TeacherPaymentCollection({ student }) {
 
             }
 
+
+
+
             try {
                 const response = await axios.delete(`https://zuss-school-management-system-server-site.vercel.app/api/payFees/payStatus/${payFeeStatus?._id}`);
                 if (response.status === 200) {
                     try {
                         const response = await axios.post('https://zuss-school-management-system-server-site.vercel.app/api/payFees', StudentPaymentStatus);
                         console.log('Data stored successfully:', response.data);
+                        printPaymentReceipt(StudentPaymentStatus);
                         toast.success("Payment process completed successfully")
                     } catch (error) {
                         console.error('Error storing data:', error);
@@ -138,15 +211,16 @@ function TeacherPaymentCollection({ student }) {
 
             }
 
-            try {
-                const response = await axios.post('https://zuss-school-management-system-server-site.vercel.app/api/payFees', StudentPaymentStatus);
-                console.log('Data stored successfully:', response.data);
-                toast.success("Payment process completed successfully")
-            } catch (error) {
-                console.error('Error storing data:', error);
-                toast.error("Payment process failed")
+            printPaymentReceipt(StudentPaymentStatus)
+            // try {
+            //     const response = await axios.post('https://zuss-school-management-system-server-site.vercel.app/api/payFees', StudentPaymentStatus);
+            //     console.log('Data stored successfully:', response.data);
+            //     toast.success("Payment process completed successfully")
+            // } catch (error) {
+            //     console.error('Error storing data:', error);
+            //     toast.error("Payment process failed")
 
-            }
+            // }
             setShowPaymentModal(false);
             setShowModal(true);
             setTransactionId("");

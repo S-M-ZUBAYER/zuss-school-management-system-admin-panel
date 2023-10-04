@@ -116,14 +116,7 @@ const Admin = () => {
                                                 >
                                                     Generate Class Routine
                                                 </Link>
-                                                <Link
-                                                    to={`/${schoolName}/admin/Student_attendance`}
-                                                    className="block px-4 py-2 text-base text-gray-100 hover:bg-gray-100 hover:text-gray-900"
-                                                    role="menuitem"
-                                                    onClick={toggleStudentMenu}
-                                                >
-                                                    Student Attendance Sheet
-                                                </Link>
+
                                                 <Link
                                                     to={`/${schoolName}/admin/admission`}
                                                     className="block px-4 py-2 text-base text-gray-100 hover:bg-gray-100 hover:text-gray-900"

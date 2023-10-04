@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
 import { toast } from 'react-hot-toast';
-import { AuthContext } from '../../../../context/UserContext';
 import axios from 'axios';
+import { AuthContext } from '../../../../context/UserContext';
 
 const TermCondition = ({ term, index, onDelete, onEdit }) => {
     return (
@@ -72,37 +72,30 @@ const AdmissionForm = () => {
             applicationFee: applicationFee,
         };
 
+
         try {
-            // Check if admission information exists for the particular school code
-            const existingInfoResponse = await axios.get(
-                `https://zuss-school-management-system-server-site.vercel.app/api/admissionInfo/${currentSchoolCode}`
+            // Make a PATCH request to update the admission information
+            const updateResponse = await axios.patch(
+                `https://zuss-school-management-system-server-site.vercel.app/api/admissionInfo/update/${currentSchoolCode}`,
+                admissionInfo
             );
 
-            if (existingInfoResponse.data.msg === true) {
-                // Admission information exists, make a PATCH request to update
-                const updateResponse = await axios.patch(
-                    `https://zuss-school-management-system-server-site.vercel.app/api/admissionInfo/update/${currentSchoolCode}`,
-                    admissionInfo
-                );
-
-                console.log(updateResponse);
+            // Check the status code to determine if the update was successful
+            if (updateResponse.status === 200) {
                 toast.success('Admission information updated successfully');
-            } else {
-                // Admission information does not exist, make a POST request to add new
-                const addResponse = await axios.post('https://zuss-school-management-system-server-site.vercel.app/api/admissionInfo', {
-                    schoolName,
-                    schoolCode: currentSchoolCode,
-                    admissionInfo,
-                });
-
-                console.log(addResponse);
-                toast.success('Admission information added successfully');
+            }
+            else if (updateResponse.status === 201) {
+                toast.success('Admission information updated successfully');
+            }
+            else {
+                toast.error('Failed to update admission information');
             }
         } catch (error) {
-            // Show error toast if request fails
-            toast.error('Failed to add/update admission information');
+            // Show error toast if the request fails
+            toast.error('Failed to update admission information');
         }
     };
+
     return (
         <div className="p-4 text-white border-2 rounded-lg mt-10 mx-12">
             <h1 className="text-3xl font-bold mb-4 bg-gradient-to-r from-green-500 to-yellow-500 text-transparent bg-clip-text">Admission Prospective</h1>

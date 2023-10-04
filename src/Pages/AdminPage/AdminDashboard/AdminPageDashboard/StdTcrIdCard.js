@@ -43,9 +43,9 @@ const StdTcrIdCard = () => {
     const [teacherEmail, setTeacherEmail] = useState('');
     const [teacherName, setTeacherName] = useState('');
     const [teacherGender, setTeacherGender] = useState('');
-    const [teacherCardIssue, setTeacherCardIssue] = useState(Date);
+    const [teacherCardIssue, setTeacherCardIssue] = useState("");
     const [teacherDateBirth, setTeacherDateBirth] = useState('');
-    const [teacherCardExpire, setTeacherCardExpire] = useState(Date);
+    const [teacherCardExpire, setTeacherCardExpire] = useState("");
     const [teacherImg, setTeacherImg] = useState("");
     const [teacherDesignation, setTeacherDesignation] = useState("");
 
@@ -209,8 +209,8 @@ const StdTcrIdCard = () => {
             <h1 className="text-2xl text-lime-200 font-bold my-5 mt-10">
                 Student Id Card Section
             </h1>
-            <div className="grid gri  lg:grid-cols-3 text-white my-20 mb-10">
-                <div>
+            <div className="text-center grid  lg:grid-cols-3 text-white my-20 mb-10">
+                <div className="">
                     <div>
                         <h1 className="text-xl font-bold text-yellow-200 mb-3">
                             Student ID Card
@@ -224,7 +224,7 @@ const StdTcrIdCard = () => {
 
                     {/* ************************** This is the form section to input student information to generate the student ID card ********************************** */}
 
-                    <div>
+                    <div >
                         <h1>
                             Student Information
                         </h1>
@@ -378,7 +378,7 @@ const StdTcrIdCard = () => {
                                     <input type="digit" className="w-full bg-black pl-2 text-white" placeholder="please provide ID" id="TeacherId" value={teacherId} onChange={handleToTeacherId} />
                                     <hr className="border-slate-300 mb-8 mx-1"></hr>
 
-                                    <input type="email" className="w-full bg-black pl-2 text-white" placeholder="please provide your Email ID" id="TeacherEmail" value={teacherEmail} onChange={handleToTeacherEmail} />
+                                    <input type="email" className="w-full bg-black pl-2 text-white" placeholder="please provide your Phone" id="TeacherEmail" value={teacherEmail} onChange={handleToTeacherEmail} />
                                     <hr className="border-slate-300 mb-8 mx-1"></hr>
 
                                     <label>Date of Birth</label>
@@ -416,9 +416,9 @@ const StdTcrIdCard = () => {
                         img={teacherImg}
                         email={teacherEmail}
                         id={teacherId}
-                        dateOfBirth={teacherDateBirth}
-                        cardIssue={teacherCardIssue}
-                        expire={teacherCardExpire}
+                        teacherDateBirth={teacherDateBirth}
+                        teacherCardIssue={teacherCardIssue}
+                        teacherCardExpire={teacherCardExpire}
                         gender={teacherGender}
                         designation={teacherDesignation}
                     ></TeacherIdCard1>
@@ -429,9 +429,9 @@ const StdTcrIdCard = () => {
                         img={teacherImg}
                         email={teacherEmail}
                         id={teacherId}
-                        dateOfBirth={teacherDateBirth}
-                        cardIssue={teacherCardIssue}
-                        expire={teacherCardExpire}
+                        teacherDateBirth={teacherDateBirth}
+                        teacherCardIssue={teacherCardIssue}
+                        teacherCardExpire={teacherCardExpire}
                         gender={teacherGender}
                         designation={teacherDesignation}
                     ></TeacherIdCard2>
@@ -442,9 +442,9 @@ const StdTcrIdCard = () => {
                         img={teacherImg}
                         email={teacherEmail}
                         id={teacherId}
-                        dateOfBirth={teacherDateBirth}
-                        cardIssue={teacherCardIssue}
-                        expire={teacherCardExpire}
+                        teacherDateBirth={teacherDateBirth}
+                        teacherCardIssue={teacherCardIssue}
+                        teacherCardExpire={teacherCardExpire}
                         gender={teacherGender}
                         designation={teacherDesignation}
                     ></TeacherIdCard3>
@@ -455,9 +455,9 @@ const StdTcrIdCard = () => {
                         img={teacherImg}
                         email={teacherEmail}
                         id={teacherId}
-                        dateOfBirth={teacherDateBirth}
-                        cardIssue={teacherCardIssue}
-                        expire={teacherCardExpire}
+                        teacherDateBirth={teacherDateBirth}
+                        teacherCardIssue={teacherCardIssue}
+                        teacherCardExpire={teacherCardExpire}
                         gender={teacherGender}
                         designation={teacherDesignation}
                     ></TeacherIdCard4>

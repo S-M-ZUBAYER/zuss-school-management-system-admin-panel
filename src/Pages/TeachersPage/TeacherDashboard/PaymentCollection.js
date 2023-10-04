@@ -3,7 +3,10 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../context/UserContext';
 import { toast } from 'react-hot-toast';
 import { green } from '@cloudinary/url-gen/actions/adjust';
+import { FiEdit } from 'react-icons/fi';
+import { MdDeleteSweep } from 'react-icons/md';
 import axios from 'axios';
+import EditPayment from './EditPayment';
 
 
 function PaymentCollection() {
@@ -183,7 +186,45 @@ function PaymentCollection() {
         }
     };
 
-    console.log(allPayment)
+
+
+    const handleToDelete = (id) => {
+        const confirmed = window.confirm('Are you sure you want to delete this payment Information?');
+
+        if (confirmed) {
+            axios.delete(`https://zuss-school-management-system-server-site.vercel.app/api/stdPayment/${id}`)
+                .then((response) => {
+                    if (response.data) {
+                        setAllPayment(allPayment.filter(payment => payment?._id !== id))
+                        toast.success("Delete this term Successfully")
+                    } else {
+                        console.error('Delete was not successful:', response.data.message);
+                        toast.error('Delete was not successful:', response.data.message)
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error while deleting:', error);
+                    toast.error('Error while deleting:', error)
+                });
+        }
+    };
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedElement, setSelectedElement] = useState({});
+
+    // Function to open the edit modal
+    const handleToModalOpen = (paymentObject) => {
+        setIsEditModalOpen(true);
+        setSelectedElement(paymentObject)
+        console.log(paymentObject)
+    };
+
+    // Function to close the edit modal
+    const handleCloseModal = () => {
+        setIsEditModalOpen(false);
+    };
+
+
     return (
         <div className="text-white">
             <h1 className="text-orange-300 text-3xl font-bold my-5">Payment System</h1>
@@ -277,9 +318,15 @@ function PaymentCollection() {
             {allPayment.length > 0 && (
                 <div>
                     <h2 className="text-2xl font-semibold mt-8 text-green-400 underline">Payment Summary</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 mb-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 mb-10 ">
+
                         {allPayment.map((paymentObject, index) => (
-                            <div key={index} className="bg-gradient-to-br from-yellow-800 via-blue-800 to-green-800 border border-gray-300 rounded-lg p-4 m-4 shadow-md ">
+                            <div key={index} className="bg-gradient-to-br from-yellow-800 via-blue-800 to-green-800 border border-gray-300 rounded-lg p-4 m-4 shadow-md relative">
+                                <label htmlFor="my_modal_6" onClick={() => handleToModalOpen(paymentObject)} className=" absolute top-2 right-8 text-amber-300 cursor-pointer">
+                                    <FiEdit></FiEdit>
+                                </label>
+
+                                <btn onClick={() => handleToDelete(paymentObject?._id)} className="absolute top-2 right-1 text-xl text-red-500 cursor-pointer "><MdDeleteSweep></MdDeleteSweep></btn>
                                 <h3 className="text-xl font-bold mb-4 text-amber-300">{paymentObject.schoolName}</h3>
                                 <h3 className="text-lg font-semibold mb-2">{paymentObject.className}</h3>
                                 <div className="flex items-center justify-evenly mb-3">
@@ -299,6 +346,14 @@ function PaymentCollection() {
                                         ))}
                                     </ul>
                                 </div>
+                                {isEditModalOpen && (
+                                    <EditPayment
+                                        element={selectedElement}
+                                        closeModal={handleCloseModal}
+                                        isEditModalOpen={isEditModalOpen}
+                                    // Pass any necessary functions or props for editing here
+                                    />
+                                )}
                             </div>
                         ))}
                     </div>

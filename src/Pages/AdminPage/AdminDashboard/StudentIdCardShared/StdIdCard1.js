@@ -4,10 +4,11 @@ import img1 from "../../../../Assets/IdCard/id_8.jpg"
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { AuthContext } from '../../../../context/UserContext';
+import { FaCloudDownloadAlt } from 'react-icons/fa';
 
 const StdIdCard1 = ({ name, email, phone, id, gender, stdClass, expire, cardIssue, dateOfBirth, img, selectedImage }) => {
     const { schoolName } = useContext(AuthContext);
-    console.log(schoolName)
+
     const divRef = useRef(null);
 
     function handleDownloadClick() {
@@ -18,41 +19,19 @@ const StdIdCard1 = ({ name, email, phone, id, gender, stdClass, expire, cardIssu
         });
     }
 
-    // const handlePrint = () => {
-    //     const target = document.getElementById("targetDiv");
-    //     if (target) {
-    //         window.print();
-    //     }
-    // };
-
-    const targetRef = useRef(null);
-
-    const handlePrint = () => {
-        const target = targetRef.current;
-
-        if (target) {
-            const printContents = target.innerHTML;
-            const originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
-    };
 
 
     return (
 
-        <div>
-            {/* <button onClick={handleDownloadClick}>Download</button>
-            <button onClick={handlePrint}>
-                Print
-            </button> */}
-            {/* <div ref={divRef} id="targetDiv" className="w-72 h-[450px]  rounded-md overflow-hidden shadow-lg flex flex-col justify-between bg-cover bg-no-repeat" style={{ backgroundImage: `url(${img1})` }}> */}
+        <div className="relative">
+
+            <button className="absolute z-20 right-24 top-0" onClick={handleDownloadClick}><FaCloudDownloadAlt className="text-lime-400 text-right text-xl font-bold"></FaCloudDownloadAlt></button>
+
 
             <div
                 ref={divRef}
                 id="targetDiv"
-                className="w-72 h-[450px] rounded-md overflow-hidden flex flex-col justify-between bg-cover bg-no-repeat relative"
+                className=" w-72 h-[450px] rounded-md overflow-hidden flex flex-col justify-between bg-cover bg-no-repeat relative"
                 style={{ backgroundImage: `url(${img1})` }}
             >
                 <div className="flex flex-col items-center justify-center h-24 bg-blue-500 text-white">

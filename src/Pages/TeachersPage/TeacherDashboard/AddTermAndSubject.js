@@ -293,7 +293,9 @@ import { AuthContext } from '../../../context/UserContext';
 import { toast } from 'react-hot-toast';
 import { green } from '@cloudinary/url-gen/actions/adjust';
 import axios from 'axios';
-
+import { FiEdit } from 'react-icons/fi';
+import { MdDeleteSweep } from 'react-icons/md';
+import EditTermSub from './EditTermSub';
 
 function AddTermAndSubject() {
 
@@ -478,6 +480,42 @@ function AddTermAndSubject() {
         }
     };
 
+
+    const handleToDelete = (id) => {
+        const confirmed = window.confirm('Are you sure you want to delete this term?');
+
+        if (confirmed) {
+            axios.delete(`https://zuss-school-management-system-server-site.vercel.app/api/termSubject/${id}`)
+                .then((response) => {
+                    if (response.data) {
+                        setAllTerm(allTerm.filter(term => term?._id !== id));
+                        toast.success("Delete this term Successfully")
+                    } else {
+                        console.error('Deletion was not successful:', response.data.message);
+                        toast.error('Deletion was not successful:', response.data.message)
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error while deleting:', error);
+                    toast.error('Error while deleting:', error)
+                });
+        }
+    };
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedElement, setSelectedElement] = useState({});
+
+    // Function to open the edit modal
+    const handleToModalOpen = (element) => {
+        setIsEditModalOpen(true);
+        setSelectedElement(element)
+    };
+
+    // Function to close the edit modal
+    const handleCloseModal = () => {
+        setIsEditModalOpen(false);
+    };
+
     return (
         <div className="text-white">
             <h1 className="text-orange-300 text-3xl font-bold my-5">Add Term&Subject Name</h1>
@@ -583,7 +621,14 @@ function AddTermAndSubject() {
                     <h2 className="text-2xl font-semibold mt-8 text-green-400 underline">Exam Term&Subject List</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 mb-10">
                         {allTerm.map((element, index) => (
-                            <div key={index} className="bg-gradient-to-br from-yellow-800 via-blue-800 to-green-800 border border-gray-300 rounded-lg p-4 m-4 shadow-md ">
+                            <div key={index} className="bg-gradient-to-br from-yellow-800 via-blue-800 to-green-800 border border-gray-300 rounded-lg p-4 m-4 shadow-md relative">
+
+                                <label htmlFor="my_modal_6" onClick={() => handleToModalOpen(element)} className=" absolute top-2 right-8 text-amber-300 cursor-pointer">
+                                    <FiEdit></FiEdit>
+                                </label>
+
+                                <btn onClick={() => handleToDelete(element?._id)} className="absolute top-2 right-1 text-xl text-red-500 cursor-pointer "><MdDeleteSweep></MdDeleteSweep></btn>
+
                                 <h3 className="text-xl font-bold mb-4 text-amber-300">{element.schoolName}</h3>
                                 <h3 className="text-lg font-semibold mb-2">{element.className}</h3>
                                 <div className="flex items-center justify-evenly mb-3">
@@ -607,6 +652,14 @@ function AddTermAndSubject() {
                         ))}
                     </div>
                 </div>
+            )}
+            {isEditModalOpen && (
+                <EditTermSub
+                    element={selectedElement}
+                    closeModal={handleCloseModal}
+                    isEditModalOpen={isEditModalOpen}
+                // Pass any necessary functions or props for editing here
+                />
             )}
         </div>
     );

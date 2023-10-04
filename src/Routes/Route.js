@@ -10,7 +10,6 @@ import Register from "../Pages/Register/Register";
 import TransferCertificate from "../Pages/TeachersPage/TeacherDashboard/Certificates/TransferCertificate";
 import CharacterCertificate from "../Pages/TeachersPage/TeacherDashboard/Certificates/CharacterCertificate";
 import CourseCompletionCertificate from "../Pages/TeachersPage/TeacherDashboard/Certificates/CourseCompletionCertificate";
-import StudentAttendanceStatus from "../Pages/StudentsPage/StudentDashboard/StudentAttendance/StudentAttendanceStatus";
 import StdTcrIdCard from "../Pages/AdminPage/AdminDashboard/AdminPageDashboard/StdTcrIdCard";
 import AllStaffInfo from "../Pages/AdminPage/AdminDashboard/AdminPageDashboard/AllStaffInfo";
 import AddSalary from "../Pages/AdminPage/AdminDashboard/Salary/addSalary";
@@ -33,6 +32,8 @@ import Payment from "../Pages/AdminPage/AdminDashboard/Payment/Payment";
 import AddTermAndSubject from "../Pages/TeachersPage/TeacherDashboard/AddTermAndSubject";
 import NoticeHomePage from "../Pages/IntroductionPage/IntroDashboard/NoticeHomePage";
 import SiteManagement from "../Pages/IntroductionPage/IntroDashboard/SiteManagement";
+import PrivateRoute from "./PrivateRoute";
+import AdminRegister from "../Pages/Register/AdminRegister";
 
 export const router = createBrowserRouter([
     // {
@@ -64,8 +65,12 @@ export const router = createBrowserRouter([
                 element: <Login></Login>
             },
             {
-                path: "/:name/register",
+                path: "/:name/teacherRegister",
                 element: <Register></Register>
+            },
+            {
+                path: "/:name/adminRegister",
+                element: <AdminRegister></AdminRegister>
             },
         ]
     },
@@ -73,107 +78,104 @@ export const router = createBrowserRouter([
     {
 
         path: '/:name/admin',
-        element: <Admin></Admin>,
+        element: <PrivateRoute><Admin></Admin></PrivateRoute>,
         children: [
             {
                 path: '/:name/admin',
-                element: <AdminDashboard></AdminDashboard>
+                element: <PrivateRoute><AdminDashboard></AdminDashboard></PrivateRoute>
             },
             {
                 path: '/:name/admin/calender',
-                element: <AcademicCalender></AcademicCalender>
+                element: <PrivateRoute><AcademicCalender></AcademicCalender></PrivateRoute>
             },
             {
                 path: '/:name/admin/staff',
-                element: <AllStaffInfo></AllStaffInfo>
+                element: <PrivateRoute><AllStaffInfo></AllStaffInfo></PrivateRoute>
             },
             {
                 path: '/:name/admin/student',
-                element: <AllStudent></AllStudent>
+                element: <PrivateRoute><AllStudent></AllStudent></PrivateRoute>
             },
             {
                 path: '/:name/admin/student/details/:studentId',
-                element: <StudentsDetailsPage></StudentsDetailsPage>
+                element: <PrivateRoute><StudentsDetailsPage></StudentsDetailsPage></PrivateRoute>
             },
             {
                 path: '/:name/admin/idCard',
-                element: <StdTcrIdCard></StdTcrIdCard>
+                element: <PrivateRoute><StdTcrIdCard></StdTcrIdCard></PrivateRoute>
             },
             {
                 path: '/:name/admin/salary',
-                element: <AddSalary></AddSalary>
+                element: <PrivateRoute><AddSalary></AddSalary></PrivateRoute>
             },
             {
                 path: '/:name/admin/addNotice',
-                element: <NoticeHomePage></NoticeHomePage>
+                element: <PrivateRoute><NoticeHomePage></NoticeHomePage></PrivateRoute>
             },
             {
                 path: '/:name/admin/siteManagement',
-                element: <SiteManagement></SiteManagement>
+                element: <PrivateRoute><SiteManagement></SiteManagement></PrivateRoute>
             },
             {
                 path: '/:name/admin/addEvents',
-                element: <AddEvents></AddEvents>
+                element: <PrivateRoute><AddEvents></AddEvents></PrivateRoute>
             },
-            {
-                path: '/:name/admin/Student_attendance',
-                element: <StudentAttendanceStatus></StudentAttendanceStatus>
-            },
+
             {
                 path: '/:name/admin/teacher_attendance',
-                element: <Tcr_Atd_Sheet></Tcr_Atd_Sheet>
+                element: <PrivateRoute><Tcr_Atd_Sheet></Tcr_Atd_Sheet></PrivateRoute>
             },
             {
                 path: '/:name/admin/addStudent',
-                element: <AddStudent></AddStudent>
+                element: <PrivateRoute><AddStudent></AddStudent></PrivateRoute>
             },
             {
                 path: '/:name/admin/admissionProcess',
-                element: <AdminAdmissionProcess></AdminAdmissionProcess>
+                element: <PrivateRoute><AdminAdmissionProcess></AdminAdmissionProcess></PrivateRoute>
             },
             {
                 path: '/:name/admin/addStaff',
-                element: <AddStaff></AddStaff>
+                element: <PrivateRoute><AddStaff></AddStaff></PrivateRoute>
             },
             {
                 path: '/:name/admin/atnTime',
-                element: <SchoolStartEndField></SchoolStartEndField>
+                element: <PrivateRoute><SchoolStartEndField></SchoolStartEndField></PrivateRoute>
             },
             {
                 path: '/:name/admin/admission',
-                element: <AdmissionInfo></AdmissionInfo>
+                element: <PrivateRoute><AdmissionInfo></AdmissionInfo></PrivateRoute>
             },
             {
                 path: '/:name/admin/admissionProcess/details/:applicationId',
-                element: <ApplicationDetails></ApplicationDetails>
+                element: <PrivateRoute><ApplicationDetails></ApplicationDetails></PrivateRoute>
             },
             {
                 path: '/:name/admin/class',
-                element: <AddClassInfo></AddClassInfo>
+                element: <PrivateRoute><AddClassInfo></AddClassInfo></PrivateRoute>
             },
             {
                 path: '/:name/admin/classRoutine',
-                element: <GenerateClassRoutine></GenerateClassRoutine>
+                element: <PrivateRoute><GenerateClassRoutine></GenerateClassRoutine></PrivateRoute>
             },
             {
                 path: '/:name/admin/transfer',
-                element: <TransferCertificate></TransferCertificate>
+                element: <PrivateRoute><TransferCertificate></TransferCertificate></PrivateRoute>
             },
             {
                 path: '/:name/admin/character',
-                element: <CharacterCertificate></CharacterCertificate>
+                element: <PrivateRoute><CharacterCertificate></CharacterCertificate></PrivateRoute>
             },
             {
                 path: '/:name/admin/completion',
-                element: <CourseCompletionCertificate></CourseCompletionCertificate>
+                element: <PrivateRoute><CourseCompletionCertificate></CourseCompletionCertificate></PrivateRoute>
             },
             {
                 path: '/:name/admin/paymentSystem',
-                element: <Payment></Payment>
+                element: <PrivateRoute><Payment></Payment></PrivateRoute>
             },
             {
                 path: '/:name/admin/term&subjects',
-                element: <AddTermAndSubject></AddTermAndSubject>
+                element: <PrivateRoute><AddTermAndSubject></AddTermAndSubject></PrivateRoute>
             },
 
         ]

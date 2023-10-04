@@ -13,61 +13,89 @@ const LogIn = () => {
     const [userEmail, setUserEmail] = useState('');
     const { schoolName, setSchoolName, currentSchoolCode, setCurrentSchoolCode } = useContext(AuthContext);
     const [userData, setUserData] = useState('');
+    const [currentUser, setCurrentUser] = useState({});
 
     const { signIn, loading, setLoading, resetPassword } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || `/${schoolName}`;
 
+    const handleToEmail = (event) => {
+        // Assuming you have an input field with the name "email"
+        setCurrentUser(event.target.value);
+    }
 
+    useEffect(() => {
+        // Define the API URL
+        const apiUrl = `https://zuss-school-management-system-server-site.vercel.app/api/schoolUser/${currentUser}`;
+
+        // Make the GET request using axios
+        axios
+            .get(apiUrl)
+            .then((response) => {
+                // Set the response data in state
+                setCurrentUser(response.data);
+            })
+            .catch((error) => {
+                // Handle any errors here
+                console.error('Error:', error);
+            });
+    }, [currentUser]);
+    console.log(currentUser)
 
     const handleSubmit = (event) => {
         event.preventDefault();
         setLoading(true);
         const email = event.target.email.value;
         const password = event.target.password.value;
-        console.log(email, password)
-        signIn(email, password)
-            .then(result => {
-                axios.get(`https://zuss-school-management-system-server-site.vercel.app/api/schoolUser/${email}`)
-                    .then(response => {
-                        setUserData(response.data); // Store the fetched data in state
-                        setSchoolName((response?.data).schoolName)
-                        setCurrentSchoolCode((response?.data).schoolCode);
-                        localStorage.setItem('schoolUser', JSON.stringify(response.data))
-                        setLoading(false);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                        setLoading(false);
-                    });
-                toast.success('logIn successfully');
+        if (currentUser?.admin === true) {
+            signIn(email, password)
+                .then(result => {
+                    axios.get(`https://zuss-school-management-system-server-site.vercel.app/api/schoolUser/${email}`)
+                        .then(response => {
+                            setUserData(response.data); // Store the fetched data in state
+                            setSchoolName((response?.data).schoolName)
+                            setCurrentSchoolCode((response?.data).schoolCode);
+                            localStorage.setItem('schoolUser', JSON.stringify(response.data))
+                            setLoading(false);
+                        })
+                        .catch(error => {
+                            console.error('Error fetching data:', error);
+                            setLoading(false);
+                        });
+                    toast.success('logIn successfully');
 
-                // setAuthToken(result.user, accountType)
+                    // setAuthToken(result.user, accountType)
 
-                navigate(`/${schoolName}/admin`);
-            })
-            .catch(err => {
-                toast.error(err.message);
-                console.log(err);
-                setLoading(false);
-            })
+                    navigate(`/${schoolName}/admin`);
+                })
+                .catch(err => {
+                    toast.error(err.message);
+                    console.log(err);
+                    setLoading(false);
+                })
+        }
+        else {
+            toast.error("You Don't have the permission to use this site");
+            setLoading(false)
+            return;
+        }
 
     }
 
 
 
     const handleToResetPassword = () => {
-        resetPassword(userEmail)
-            .then(() => {
-                toast.success('Please check your email to reset')
-                setLoading(false);
-            })
-            .catch(err => {
-                toast.error(err.message);
-                console.log(err);
-                setLoading(false);
-            })
+        // resetPassword(userEmail)
+        //     .then(() => {
+        //         toast.success('Please check your email to reset')
+        //         setLoading(false);
+        //     })
+        //     .catch(err => {
+        //         toast.error(err.message);
+        //         console.log(err);
+        //         setLoading(false);
+        //     })
     }
 
     return (
@@ -111,6 +139,7 @@ const LogIn = () => {
                             </label>
                             <input
                                 onBlur={event => setUserEmail()}
+                                onChange={handleToEmail}
                                 type='email'
                                 name='email'
                                 id='email'
@@ -153,13 +182,6 @@ const LogIn = () => {
                     </button>
                 </div>
 
-                <p className='px-6 text-sm text-center text-gray-400'>
-                    Don't have an account yet?{' '}
-                    <Link to={`/${schoolName}/register`} className='hover:underline text-gray-600'>
-                        Sign up
-                    </Link>
-                    .
-                </p>
             </div>
         </div>
     )

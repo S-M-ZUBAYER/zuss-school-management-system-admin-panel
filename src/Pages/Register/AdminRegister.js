@@ -4,11 +4,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/UserContext';
 import { useEffect } from 'react';
 import axios from 'axios';
+import BtnSpinner from '../Shared/Spinners/BtnSpinner';
 
 
 
 
-const Register = () => {
+const AdminRegister = () => {
     const { createUser, currentSchoolCode, setCurrentSchoolCode, schoolName, setSchoolName, updateUserProfile, loading, setLoading } = useContext(AuthContext);
     const [matchError, setMatchError] = useState(null);
     const [lengthError, setLengthError] = useState(null);
@@ -98,12 +99,13 @@ const Register = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setLoading(true);
         const name = event.target.name.value;
         const image = event.target.image.files[0];
         const email = event.target.email.value;
         const password = event.target.password.value;
         const confirmPassword = event.target.confirmPassword.value;
-        setLoading(true);
+
         console.log(schoolName, currentSchoolCode, name, image, email, password, confirmPassword);
         if (password.length < 6) {
             setLengthError("Your Password has to be a minimum of 6 characters");
@@ -139,10 +141,9 @@ const Register = () => {
                         };
 
                         // Sending the POST request to https://zuss-school-management-system-server-site.vercel.app/api/schoolUser/
-                        axios.post('https://zuss-school-management-system-server-site.vercel.app/api/schoolUser/teacher/add', schoolUser)
+                        axios.post('https://zuss-school-management-system-server-site.vercel.app/api/schoolUser/admin/add', schoolUser)
                             .then(response => {
-                                toast.success('Create a teacher account successfully...');
-
+                                toast.success('Registration Completed successfully...');
                                 setLoading(false);
                             })
                             .catch(err => {
@@ -172,7 +173,7 @@ const Register = () => {
             <div data-aos="zoom-in-down" data-aos-duration="2000" className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
                 <div className='mb-8 text-center'>
                     <h1 className='my-3 text-4xl font-bold'>Signup</h1>
-                    <p className='text-sm text-gray-400'>Create a teacher account</p>
+                    <p className='text-sm text-gray-400'>Create a admin account</p>
                 </div>
                 <form
                     onSubmit={handleSubmit}
@@ -247,6 +248,7 @@ const Register = () => {
                                 required
                             />
                         </div>
+
 
 
 
@@ -328,8 +330,8 @@ const Register = () => {
                                 type='submit'
                                 className='w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100 bg-gradient-to-r from-purple-400 to-pink-600'
                             >
-                                {/* {loading ? <BtnSpinner></BtnSpinner> : 'Sign Up'} */}
-                                Sign Up
+                                {loading ? <BtnSpinner></BtnSpinner> : 'Sign Up'}
+
                             </button>
                         </div>
                     </div>
@@ -346,5 +348,5 @@ const Register = () => {
     )
 }
 
-export default Register;
+export default AdminRegister;
 

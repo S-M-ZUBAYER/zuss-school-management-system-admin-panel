@@ -48,6 +48,7 @@ const UserContext = ({ children }) => {
         return secondPart;
     }
 
+
     useEffect(() => {
         const fetchSchoolPath = async () => {
             const path = getPath();

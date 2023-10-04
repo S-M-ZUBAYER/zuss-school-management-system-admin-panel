@@ -53,23 +53,26 @@ const Footer = () => {
                             </div>
 
                             <div>
-                                <h3 className="text-gray-200 uppercase dark:text-white">Blog</h3>
-                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">React</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">Prototype inheritance</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">Unit testing</a>
+                                <h3 className="text-gray-200 uppercase dark:text-white">Education Board</h3>
+                                <a href="https://dhakaeducationboard.portal.gov.bd" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline" target="_blank" rel="noopener noreferrer">Dhaka Education Board</a>
+
+                                <a href="https://rajshahieducationboard.gov.bd" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline" target="_blank" rel="noopener noreferrer">Rajshahi Education Board</a>
+
+                                <a href="https://jessoreeducationboard.portal.gov.bd" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline" target="_blank" rel="noopener noreferrer">Jessore Education Board</a>
+
                             </div>
 
                             <div>
-                                <h3 className="text-gray-200 uppercase dark:text-white">Products</h3>
-                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">Cricket bats</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">Cricket balls</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">Cricket helmets</a>
+                                <h3 className="text-gray-200 uppercase dark:text-white">Available</h3>
+                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">Student Management</a>
+                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">Attendance Management</a>
+                                <a href="#" className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">Result Management</a>
                             </div>
 
                             <div>
                                 <h3 className="text-gray-200 uppercase dark:text-white">Contact</h3>
-                                <span className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">+8801304979278</span>
-                                <span className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">smzubayer9004@email.com</span>
+                                <span className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">+8801816552934</span>
+                                <span className="block mt-2 text-sm text-gray-200 dark:text-gray-400 hover:underline">asthainsight10@gmail.com</span>
                             </div>
                         </div>
                     </div>
